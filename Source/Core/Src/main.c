@@ -93,6 +93,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
   // EX1 Begin
+  // Assign a counter clock
   int counter = 0;
   // Initially assign to both LEDs.
   HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET); // Let the red on at first
