@@ -54,39 +54,35 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void display7SEG(int num)
-{
-	/*	HOW TO CONVERT
-	 * 	0b00000000 -> 0b0abcdefg
-	 */
-	if(num == 0) GPIOB->ODR = 0x01; //Displaying 0
-	if(num == 1) GPIOB->ODR = 0x4F; //Displaying 1
-	if(num == 2) GPIOB->ODR = 0x12; //Displaying 2
-	if(num == 3) GPIOB->ODR = 0x06; //Displaying 3
-	if(num == 4) GPIOB->ODR = 0x4C; //Displaying 4
-	if(num == 5) GPIOB->ODR = 0x24; //Displaying 5
-	if(num == 6) GPIOB->ODR = 0x20; //Displaying 6
-	if(num == 7) GPIOB->ODR = 0x0F; //Displaying 7
-	if(num == 8) GPIOB->ODR = 0x00; //Displaying 8
-	if(num == 9) GPIOB->ODR = 0x04; //Displaying 9
-}
-
 void Light_traffic_1(int lightSignal){
 	// Let red LED turn on for 5 secs
 	if(lightSignal >= 1 && lightSignal < 6){
 		HAL_GPIO_WritePin(LED_RED_1_GPIO_Port, LED_RED_1_Pin, SET);
 		HAL_GPIO_WritePin(LED_YELLOW_1_GPIO_Port, LED_YELLOW_1_Pin, RESET);
 		HAL_GPIO_WritePin(LED_GREEN_1_GPIO_Port, LED_GREEN_1_Pin, RESET);
+		// Display 7-seg
+		if(lightSignal == 1) GPIOB->ODR = 0x24; //Displaying 5
+		if(lightSignal == 2) GPIOB->ODR = 0x4C; //Displaying 4
+		if(lightSignal == 3) GPIOB->ODR = 0x06; //Displaying 3
+		if(lightSignal == 4) GPIOB->ODR = 0x12; //Displaying 2
+		if(lightSignal == 5) GPIOB->ODR = 0x4F; //Displaying 1
 	}
 	// GREEN turns on 3 secs
 	if(lightSignal >= 6 && lightSignal < 9){
 		HAL_GPIO_WritePin(LED_RED_1_GPIO_Port, LED_RED_1_Pin, RESET);
 		HAL_GPIO_WritePin(LED_GREEN_1_GPIO_Port, LED_GREEN_1_Pin, SET);
+		// Display 7-seg
+		if(lightSignal == 6) GPIOB->ODR = 0x06; //Displaying 3
+		if(lightSignal == 7) GPIOB->ODR = 0x12; //Displaying 2
+		if(lightSignal == 8) GPIOB->ODR = 0x4F; //Displaying 1
 	}
 	// YELLOW turns on 2 secs
 	if(lightSignal >= 9 && lightSignal < 11){
 		HAL_GPIO_WritePin(LED_YELLOW_1_GPIO_Port, LED_YELLOW_1_Pin, SET);
 		HAL_GPIO_WritePin(LED_GREEN_1_GPIO_Port, LED_GREEN_1_Pin, RESET);
+		// Display 7-seg
+		if(lightSignal == 9) GPIOB->ODR = 0x12; //Displaying 2
+		if(lightSignal == 10) GPIOB->ODR = 0x4F; //Displaying 1
 	}
 }
 
@@ -142,7 +138,6 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   // Assign signals
-    int counter = 0;
     int signal_1 = 1;
     int signal_2 = 1;
   /* USER CODE END 2 */
@@ -152,10 +147,8 @@ int main(void)
     while (1)
     {
     /* USER CODE END WHILE */
-    if(counter >= 10) counter = 0;
     if (signal_1 >= 11) signal_1 = 1;
     if (signal_2 >= 11) signal_2 = 1;
-    display7SEG(counter++);
     Light_traffic_1(signal_1++);
     Light_traffic_2(signal_2++);
 
