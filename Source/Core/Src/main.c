@@ -105,24 +105,27 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	// RED ON FOR 5 SECS
 	if(redCounter >= 5 && yellowCounter == 0 && greenCounter == 0){
 		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 		HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
 		redCounter = 0;
 	}
 	else if(yellowCounter == 0 && greenCounter == 0) redCounter++;
-
-	if(yellowCounter >= 3 && redCounter == 0 && greenCounter == 0){
+	// YELLOW ON FOR 2 SECS
+	if(yellowCounter >= 2 && redCounter == 0 && greenCounter == 0){
 		HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
 		HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
 		yellowCounter = 0;
 	}
 	else if(redCounter == 0 && greenCounter == 0) yellowCounter++;
-
-	if(greenCounter >= 4 && redCounter == 0 && yellowCounter == 0){
+	// GREEN ON FOR 3 SECS
+	if(greenCounter >= 3 && redCounter == 0 && yellowCounter == 0){
 		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 		HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
 		greenCounter = 0;
+		// For red doesn't miss 1
+		redCounter++;
 	}
 	else if(redCounter == 0 && yellowCounter == 0) greenCounter++;
 
