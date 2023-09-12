@@ -135,6 +135,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	// The idea is to count up to 11 seconds and divided into stages(RED, YELLOW, GREEN)
 	if (signal_1 >= 11) signal_1 = 1;
 	if (signal_2 >= 11) signal_2 = 1;
 	Light_traffic_1(signal_1++);
