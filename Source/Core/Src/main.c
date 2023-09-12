@@ -111,7 +111,7 @@ void Light_traffic_2(int lightSignal){
 
 
 /* USER CODE END 0 */
-
+// EX5 BEGIN
 /**
   * @brief  The application entry point.
   * @retval int
