@@ -155,10 +155,9 @@ int main(void)
     if(counter >= 10) counter = 0;
     if (signal_1 >= 11) signal_1 = 1;
     if (signal_2 >= 11) signal_2 = 1;
-    display7SEG(counter);
+    display7SEG(counter++);
     Light_traffic_1(signal_1++);
     Light_traffic_2(signal_2++);
-    counter++;
 
     HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
