@@ -93,22 +93,40 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
   // EX2 Begin
-  // Assign a counter clock
-  int counter = 0;
+  // Assign counter clocks
+  int redCounter = 0;
+  int yellowCounter = 0;
+  int greenCounter = 0;
   // Initially assign to both LEDs.
   HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET); // Let the red on at first
   HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET); // Let the yellow off at beginning
+  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET); // Let the green off at beginning
   // While loop
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(counter >= 2){
-		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-		  HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
-		  counter = 0;
-	  }
-	  counter++;
-	  HAL_Delay(1000);
+	if(redCounter >= 5 && yellowCounter == 0 && greenCounter == 0){
+		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
+		redCounter = 0;
+	}
+	else if(yellowCounter == 0 && greenCounter == 0) redCounter++;
+
+	if(yellowCounter >= 3 && redCounter == 0 && greenCounter == 0){
+		HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
+		HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+		yellowCounter = 0;
+	}
+	else if(redCounter == 0 && greenCounter == 0) yellowCounter++;
+
+	if(greenCounter >= 4 && redCounter == 0 && yellowCounter == 0){
+		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+		greenCounter = 0;
+	}
+	else if(redCounter == 0 && yellowCounter == 0) greenCounter++;
+
+	HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -162,10 +180,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin;
+  /*Configure GPIO pins : LED_RED_Pin LED_YELLOW_Pin LED_GREEN_Pin */
+  GPIO_InitStruct.Pin = LED_RED_Pin|LED_YELLOW_Pin|LED_GREEN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
