@@ -92,7 +92,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  // EX1 Begin
+  // EX2 Begin
   // Assign a counter clock
   int counter = 0;
   // Initially assign to both LEDs.
