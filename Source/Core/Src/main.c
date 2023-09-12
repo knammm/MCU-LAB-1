@@ -98,9 +98,9 @@ int main(void)
   int yellowCounter = 0;
   int greenCounter = 0;
   // Initially assign to both LEDs.
-  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET); // Let the red on at first
-  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET); // Let the yellow off at beginning
-  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET); // Let the green off at beginning
+  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET); // Let the red on at first
+  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET); // Let the yellow off at beginning
+  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET); // Let the green off at beginning
   // While loop
   while (1)
   {
