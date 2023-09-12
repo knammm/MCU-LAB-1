@@ -122,18 +122,18 @@ int main(void)
  8000166:	2300      	movs	r3, #0
  8000168:	607b      	str	r3, [r7, #4]
   // Initially assign to both LEDs.
-  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, RESET); // Let the red on at first
- 800016a:	2200      	movs	r2, #0
+  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET); // Let the red on at first
+ 800016a:	2201      	movs	r2, #1
  800016c:	2120      	movs	r1, #32
  800016e:	4836      	ldr	r0, [pc, #216]	; (8000248 <main+0xfc>)
  8000170:	f000 fc4a 	bl	8000a08 <HAL_GPIO_WritePin>
-  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET); // Let the yellow off at beginning
- 8000174:	2201      	movs	r2, #1
+  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, RESET); // Let the yellow off at beginning
+ 8000174:	2200      	movs	r2, #0
  8000176:	2140      	movs	r1, #64	; 0x40
  8000178:	4833      	ldr	r0, [pc, #204]	; (8000248 <main+0xfc>)
  800017a:	f000 fc45 	bl	8000a08 <HAL_GPIO_WritePin>
-  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET); // Let the green off at beginning
- 800017e:	2201      	movs	r2, #1
+  HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, RESET); // Let the green off at beginning
+ 800017e:	2200      	movs	r2, #0
  8000180:	2180      	movs	r1, #128	; 0x80
  8000182:	4831      	ldr	r0, [pc, #196]	; (8000248 <main+0xfc>)
  8000184:	f000 fc40 	bl	8000a08 <HAL_GPIO_WritePin>
