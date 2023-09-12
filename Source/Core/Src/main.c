@@ -135,8 +135,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	if(counter >= 13) counter = 1;
-	clock(counter++);
+	if(counter >= 13){
+		clearAllClock();
+		counter = 1;
+	}
+	else clock(counter++);
 	HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
