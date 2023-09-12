@@ -112,6 +112,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
+  // EX7 begin
   int counter = 1;
   /* USER CODE END 2 */
 
