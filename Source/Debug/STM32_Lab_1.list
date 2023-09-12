@@ -107,11 +107,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
  800015a:	f000 f85f 	bl	800021c <MX_GPIO_Init>
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
   // EX1 Begin
+  // Assign a counter clock
   int counter = 0;
  800015e:	2300      	movs	r3, #0
  8000160:	607b      	str	r3, [r7, #4]
