@@ -54,13 +54,22 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
+void display7SEG(int num)
+{
+	/*	HOW TO CONVERT
+	 * 	0b00000000 -> 0b0abcdefg
+	 */
+	if(num == 0) GPIOB->ODR = 0x01; //Displaying 0
+	if(num == 1) GPIOB->ODR = 0x4F; //Displaying 1
+	if(num == 2) GPIOB->ODR = 0x12; //Displaying 2
+	if(num == 3) GPIOB->ODR = 0x06; //Displaying 3
+	if(num == 4) GPIOB->ODR = 0x4C; //Displaying 4
+	if(num == 5) GPIOB->ODR = 0x24; //Displaying 5
+	if(num == 6) GPIOB->ODR = 0x20; //Displaying 6
+	if(num == 7) GPIOB->ODR = 0x0F; //Displaying 7
+	if(num == 8) GPIOB->ODR = 0x00; //Displaying 8
+	if(num == 9) GPIOB->ODR = 0x04; //Displaying 9
+}
 
 void Light_traffic_1(int lightSignal){
 	// Let red LED turn on for 5 secs
@@ -100,6 +109,13 @@ void Light_traffic_2(int lightSignal){
 	}
 }
 
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
   /* USER CODE BEGIN 1 */
@@ -126,23 +142,27 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   // Assign signals
-  int signal_1 = 1;
-  int signal_2 = 1;
+    int counter = 0;
+    int signal_1 = 1;
+    int signal_2 = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+    while (1)
+    {
     /* USER CODE END WHILE */
-	// The idea is to count up to 11 seconds and divided into stages(RED, YELLOW, GREEN)
-	if (signal_1 >= 11) signal_1 = 1;
-	if (signal_2 >= 11) signal_2 = 1;
-	Light_traffic_1(signal_1++);
-	Light_traffic_2(signal_2++);
-	HAL_Delay(1000);
+    if(counter >= 10) counter = 0;
+    if (signal_1 >= 11) signal_1 = 1;
+    if (signal_2 >= 11) signal_2 = 1;
+    display7SEG(counter);
+    Light_traffic_1(signal_1++);
+    Light_traffic_2(signal_2++);
+    counter++;
+
+    HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
-  }
+    }
   /* USER CODE END 3 */
 }
 
@@ -192,10 +212,15 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin|LED_YELLOW_1_Pin|LED_GREEN_1_Pin|LED_RED_2_Pin
                           |LED_YELLOW_2_Pin|LED_GREEN_2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
+                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : LED_RED_1_Pin LED_YELLOW_1_Pin LED_GREEN_1_Pin LED_RED_2_Pin
                            LED_YELLOW_2_Pin LED_GREEN_2_Pin */
@@ -205,6 +230,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB0 PB1 PB2 PB3
+                           PB4 PB5 PB6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3
+                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
