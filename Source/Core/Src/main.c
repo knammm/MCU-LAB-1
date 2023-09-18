@@ -62,6 +62,10 @@ void clock(int signal){
 void clearAllClock(){
 	HAL_GPIO_WritePin(GPIOA, LED_1_Pin|LED_2_Pin|LED_3_Pin|LED_4_Pin|LED_5_Pin|LED_6_Pin|LED_7_Pin|LED_8_Pin|LED_9_Pin|LED_10_Pin|LED_11_Pin|LED_12_Pin, RESET);
 }
+
+void setNumberOnClock(int num){
+	HAL_GPIO_WritePin(GPIOA, led_pins[num], SET);
+}
 /* USER CODE END 0 */
 
 /**
@@ -93,7 +97,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  int state = 0;
+  int num = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,9 +105,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	state = !state;
-	if(state) HAL_GPIO_WritePin(GPIOA, LED_1_Pin|LED_2_Pin|LED_3_Pin|LED_4_Pin|LED_5_Pin|LED_6_Pin|LED_7_Pin|LED_8_Pin|LED_9_Pin|LED_10_Pin|LED_11_Pin|LED_12_Pin, SET);
-	else clearAllClock();
+	if(num >= 12) {
+		num = 0;
+		clearAllClock();
+	}
+	else setNumberOnClock(num++);
 	HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
