@@ -70,6 +70,29 @@ void setNumberOnClock(int num){
 void clearNumberOnClock(int num){
 	HAL_GPIO_WritePin(GPIOA, led_pins[num], RESET);
 }
+
+void setTime(int h, int m, int s){
+	if(s > 60 || s < 0 || m > 60 || m < 0 || h > 23 || h < 0) return;
+	clearAllClock();
+	if(s == 60){
+		s = 0;
+		m++;
+	}
+	if(m == 60){
+		m = 0;
+		h++;
+	}
+	s = s / 5;
+	m = m / 5;
+	h = h % 24;
+
+	if(s == 0) s = 12;
+	if(m == 0) m = 12;
+	if(h == 0) h = 12;
+	setNumberOnClock(h - 1);
+	setNumberOnClock(m - 1);
+	setNumberOnClock(s - 1);
+}
 /* USER CODE END 0 */
 
 /**
@@ -101,8 +124,9 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  int num = 0;
-  int state = 0;
+  int h = 0;
+  int m = 0;
+  int s = 50;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -110,21 +134,20 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	if(state == 0) {
-		setNumberOnClock(num++);
-		if(num == 12){
-			--num;
-			state = !state;
-		}
+	if(s >= 60){
+		s = 0;
+		m++;
 	}
-	else{
-		clearNumberOnClock(num--);
-		if(num == -1){
-			++num;
-			state = !state;
-		}
+	if(m >= 60){
+		m = 0;
+		h++;
 	}
-	HAL_Delay(1000);
+	if(h >= 12){
+		h = 0;
+	}
+	setTime(h,m,s);
+	s++;
+	HAL_Delay(10);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
