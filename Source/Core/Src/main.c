@@ -84,7 +84,7 @@ void setTime(int h, int m, int s){
 	}
 	s = s / 5;
 	m = m / 5;
-	h = h % 24;
+	h = h % 12;
 
 	if(s == 0) s = 12;
 	if(m == 0) m = 12;
