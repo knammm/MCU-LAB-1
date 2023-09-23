@@ -74,14 +74,6 @@ void clearNumberOnClock(int num){
 void setTime(int h, int m, int s){
 	if(s > 60 || s < 0 || m > 60 || m < 0 || h > 23 || h < 0) return;
 	clearAllClock();
-	if(s == 60){
-		s = 0;
-		m++;
-	}
-	if(m == 60){
-		m = 0;
-		h++;
-	}
 	s = s / 5;
 	m = m / 5;
 	h = h % 12;
