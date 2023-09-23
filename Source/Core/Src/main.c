@@ -118,7 +118,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   int h = 0;
   int m = 0;
-  int s = 50;
+  int s = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
